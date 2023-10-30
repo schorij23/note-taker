@@ -5,8 +5,12 @@ const fs = require('fs');
 
 //GET /api/notes should read the db.json file and return all saved notes as JSON
 router.get('/api/notes', (req, res) => {
-    fs.readFile()
-})
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).json("reading notes failed");
+        }
+    });
+});
     
 
 //POST /api/notes should receive a new note to save on the request body,
@@ -17,7 +21,7 @@ router.post('/api/notes', (req, res) => {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) {
             console.error(err);
-            return res.status(500).json('Note not found');
+            return res.status(500).json('reading notes failed');
         }
 
             // Parse the JSON data into a JavaScript object that represents a note
@@ -38,7 +42,7 @@ router.post('/api/notes', (req, res) => {
         fs.writeFile('./db/db.json', JSON.stringify(notes), err => {
             if (err) {
                 console.error(err);
-                return res.status(500).json('Note not saved');
+                return res.status(500).json('writing notes failed');
             }
             // Returns the new note
             res.json(newNote);
