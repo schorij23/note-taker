@@ -9,9 +9,9 @@ router.get('/api/notes', (req, res) => {
         if (err) {
             return res.status(500).json("reading notes failed");
         }
+        return res.json(data);
     });
 });
-    
 
 //POST /api/notes should receive a new note to save on the request body,
 //add it to the db.json file, and then return the new note to the client.
@@ -35,7 +35,8 @@ router.post('/api/notes', (req, res) => {
             id: newNoteId
         };
         
-        // Adds a new note to the note array
+        // Adds a new note to the note arrayclear
+
         notes.push(newNote);
 
         // Write the new note to the database
