@@ -1,70 +1,89 @@
+// Import and require modules for setting up API routes
 const router = require('express').Router();
 //Universally Unique Identifier generates unique identifiers
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs'); 
-//The following API routes should be created:
-//POST /api/notes should receive a new note to save on the request body, 
-//add it to the db.json file, and then return the new note to the client. 
-//You'll need to find a way to give each note a unique id when it's saved (look into npm packages that could do this for you)
 
-//GET /api/notes should read the db.json file and return all saved notes as JSON
+// GET request to retrieve notes from the JSON database
 router.get('/notes', (req, res) => {
+    // Read the notes from the JSON database
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        // If there is an error return status 500 server side error response
         if (err) {
             return res.status(500).json("reading notes failed");
         }
-        // console.log(data);
-        var notes = JSON.parse(data);
+        // Parse the JSON data into an array of notes
+        let notes = JSON.parse(data);
+        // Respond with the array of notes as JSON
         return res.json(notes);
     });
 });
-
-//POST /api/notes should receive a new note to save on the request body,
-//add it to the db.json file, and then return the new note to the client.
-
+// POST request to add a new note to the JSON database
 router.post('/notes', (req, res) => {
-    // Read db.json existing notes, handle errors
+    // Read the existing notes from the JSON database
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        // If there is an error return status 500 server side error response
         if (err) {
             console.error(err);
             return res.status(500).json('reading notes failed');
         }
-            // Parse the JSON data into a JavaScript object that represents a note
+            // Parse the JSON data from the file into a JavaScript array of notes
             const notes = JSON.parse(data);
-        // const newNoteId = uuidv4();
+        // Generate a new unique ID for the new note using uuidv4
         const newNoteId = uuidv4();
-        // New note with request body an ID
+        // Create a new note object using the data from the request body and the new ID
         const newNote = {
             title: req.body.title,
             text: req.body.text,
             id: newNoteId
-        };
-        
+        }; 
         // Adds a new note to the note array
         notes.push(newNote);
-
-        // Write the new note to the database
+        // Write the updated note array to the database
         fs.writeFile('./db/db.json', JSON.stringify(notes), err => {
+            // If there is an error return status 500 server side error response
             if (err) {
                 console.error(err);
                 return res.status(500).json('writing notes failed');
             }
-            // Returns the new note
+            // If no errors returns the new note as a response
             return res.json(newNote);
-        })
+        });
+    });
+});
+    //DELETE request to delete a note by id
+    router.delete('/notes/:id', (req, res) => {
+    // Read the existing notes from the JSON database
+    fs.readFile('./db/db.json', 'utf8', (Err, data) => {
+        // If there is an error return status 500 server side error response
+        if (Err) {
+            console.error(Err);
+            return res.status(500).json('reading notes failed');
+        }
+        // Declare the notes object
+        let notes;
+        //Parse JSON data from the file into the notes array
+        notes = JSON.parse(data);
+        // Use the ID to find the index of the note in the notes array
+        const noteIndex = notes.findIndex((note) => note.id === req.params.id);
+        // Check if the note doesn't exist by id
+        if (noteIndex === -1) {
+            // If there us an error return status 400 client side error response
+            return res.status(404).json('Note not found');
+        }
+        // Remove the note from the array
+        notes.splice(noteIndex, 1);
+        // Write the updated notes back to the db.json file
+        fs.writeFile('./db/db.json', JSON.stringify(notes), (Err) => {
+            // If there is an error return status 500 server side error response
+            if (Err) {
+                console.error(Err);
+                return res.status(500).json('writing notes failed');
+            }
+            // If the note is writen return a success message
+            return res.json('Note deleted successfully');
+        });
     });
 });
 
-
-        // router.delete("./notes:id", (req, res) => {
-        //     fs.readFile('./db/db.json', 'utf8', (err, data) => {
-        //         if (err) {
-        //             console.error(err);
-        //             return res.status(500).json('reading notes failed');
-        //         }
-
-        //         let notes;
-
-        //     })
-        // })
 module.exports = router;
