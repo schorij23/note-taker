@@ -13,9 +13,7 @@ This project uses express.js to generate notes
 * [Installations](#installations)
 * [Usage](#usage)
 * [License](#license)
-* [Testing](#testing)
 * [Questions](#questions)
-* [Walkthrough](#walkthrough)
 * [Screenshots](#screenshots)
 
 
@@ -54,9 +52,6 @@ The project is licensed by the MIT License.
 
 For more details, see [License Details](https://choosealicense.com/licenses/mit/)
 
-## Testing
-This application uses jess to run tests
-
 ## Questions
 
   This is my contact information if there are any questions
@@ -64,10 +59,9 @@ This application uses jess to run tests
   - GitHub User Name https://github.com/schorij23
   - Email address schorij23@gmail.com
 
-## Walkthrough
-
-
 ## Screenshots
+Heroku Deployment link [Jeff S Note Taker](https://jeff-s-note-taker-0672484e28ca.herokuapp.com/)
+
 ![note-taker heroku opening screen](https://github.com/schorij23/note-taker/assets/5600528/efc9f35b-b12a-4b33-8f08-93658c06ba5e)
 ![Note taker page](https://github.com/schorij23/note-taker/assets/5600528/a69b197e-8fdd-490e-8419-051ec27bf167)
 
