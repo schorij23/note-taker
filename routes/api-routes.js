@@ -71,7 +71,7 @@ router.post('/notes', (req, res) => {
             // If there us an error return status 400 client side error response
             return res.status(404).json('Note not found');
         }
-        // Remove the note from the array, only deletes when note index exists
+        // Remove one note from the array based on index, only deletes when note index exists
         notes.splice(noteIndex, 1);
         // Write the updated notes back to the db.json file
         fs.writeFile('./db/db.json', JSON.stringify(notes), (Err) => {
