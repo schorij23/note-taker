@@ -68,6 +68,9 @@ This application uses jess to run tests
 
 
 ## Screenshots
+![note-taker heroku opening screen](https://github.com/schorij23/note-taker/assets/5600528/efc9f35b-b12a-4b33-8f08-93658c06ba5e)
+![Note taker page](https://github.com/schorij23/note-taker/assets/5600528/a69b197e-8fdd-490e-8419-051ec27bf167)
+
 
 
 
