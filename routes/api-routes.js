@@ -4,7 +4,7 @@ const router = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs'); 
 
-// GET request to retrieve notes from the JSON database
+// GET request to retrieve notes from the JSON database to notes.html path
 router.get('/notes', (req, res) => {
     // Read the notes from the JSON database using utf8 encoding
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
@@ -12,13 +12,13 @@ router.get('/notes', (req, res) => {
         if (err) {
             return res.status(500).json("reading notes failed");
         }
-        // Parse the JSON data into an array of notes
+        // Parse the JSON string data into an array of notes
         let notes = JSON.parse(data);
         // Respond with the array of notes as JSON
         return res.json(notes);
     });
 });
-// POST request to add a new note to the JSON database
+// POST request to add a new note to the JSON database to notes.html path
 router.post('/notes', (req, res) => {
     // Read the existing notes from the JSON database
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
@@ -27,7 +27,7 @@ router.post('/notes', (req, res) => {
             console.error(err);
             return res.status(500).json('reading notes failed');
         }
-            // Parse the JSON data from the file into a JavaScript array of notes
+            // Parse the JSON string data from the file into a array of notes
             const notes = JSON.parse(data);
         // Generate a new unique ID for the new note using uuidv4
         const newNoteId = uuidv4();
@@ -37,9 +37,9 @@ router.post('/notes', (req, res) => {
             text: req.body.text,
             id: newNoteId
         }; 
-        // Adds a new note to the note array
+        // Adds the new note to the notes array
         notes.push(newNote);
-        // Write the updated note array to the database
+        // Write the updated note array back to a string in the database
         fs.writeFile('./db/db.json', JSON.stringify(notes), err => {
             // If there is an error return status 500 server side error response
             if (err) {
@@ -68,12 +68,12 @@ router.post('/notes', (req, res) => {
         const noteIndex = notes.findIndex((note) => note.id === req.params.id);
         // Check if the note doesn't exist. findIndex returns -1 when no match
         if (noteIndex === -1) {
-            // If there us an error return status 400 client side error response
+            // If there is no note return status 400 client side error response
             return res.status(404).json('Note not found');
         }
         // Remove one note from the array based on index, only deletes when note index exists
         notes.splice(noteIndex, 1);
-        // Write the updated notes back to the db.json file
+        // Write the updated notes back to a string in the JSON Database
         fs.writeFile('./db/db.json', JSON.stringify(notes), (Err) => {
             // If there is an error return status 500 server side error response
             if (Err) {
