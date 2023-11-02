@@ -20,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Set up API routes under the '/api' endpoint
 app.use('/api', api_routes);
+
 // Set up HTML routes as the default ('/') endpoint
 app.use('/', html_routes);
 

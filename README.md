@@ -62,9 +62,6 @@ For more details, see [License Details](https://choosealicense.com/licenses/mit/
 ## Screenshots
 Heroku Deployment link [Jeff S Note Taker](https://jeff-s-note-taker-0672484e28ca.herokuapp.com/)
 
-![note-taker heroku opening screen](https://github.com/schorij23/note-taker/assets/5600528/efc9f35b-b12a-4b33-8f08-93658c06ba5e)
-![Note taker page](https://github.com/schorij23/note-taker/assets/5600528/a69b197e-8fdd-490e-8419-051ec27bf167)
+![Heroku Opening Screen](./public/assests/images/note-taker-heroku-opening-screen.png)
 
-
-
-
+![Heroku Note Taker Page](./public/assests/images/note-taker-page.png)
