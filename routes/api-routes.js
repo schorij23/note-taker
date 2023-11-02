@@ -6,7 +6,7 @@ const fs = require('fs');
 
 // GET request to retrieve notes from the JSON database
 router.get('/notes', (req, res) => {
-    // Read the notes from the JSON database
+    // Read the notes from the JSON database using utf8 encoding
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         // If there is an error return status 500 server side error response
         if (err) {
@@ -51,7 +51,7 @@ router.post('/notes', (req, res) => {
         });
     });
 });
-    //DELETE request to delete a note by id
+    //DELETE request to delete a note by id from the JSON database
     router.delete('/notes/:id', (req, res) => {
     // Read the existing notes from the JSON database
     fs.readFile('./db/db.json', 'utf8', (Err, data) => {
@@ -66,12 +66,12 @@ router.post('/notes', (req, res) => {
         notes = JSON.parse(data);
         // Use the ID to find the index of the note in the notes array
         const noteIndex = notes.findIndex((note) => note.id === req.params.id);
-        // Check if the note doesn't exist by id
+        // Check if the note doesn't exist. findIndex returns -1 when no match
         if (noteIndex === -1) {
             // If there us an error return status 400 client side error response
             return res.status(404).json('Note not found');
         }
-        // Remove the note from the array
+        // Remove the note from the array, only deletes when note index exists
         notes.splice(noteIndex, 1);
         // Write the updated notes back to the db.json file
         fs.writeFile('./db/db.json', JSON.stringify(notes), (Err) => {
